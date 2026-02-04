@@ -359,3 +359,40 @@ def register_tools(mcp: FastMCP, client: KanboardClient) -> None:
                 "success": False,
                 "error": str(e)
             }
+    
+    @mcp.tool()
+    def moveTaskPosition(
+        project_id: int,
+        task_id: int,
+        column_id: int,
+        position: int,
+        swimlane_id: int
+    ) -> Dict[str, Any]:
+        """Move a task to another column, position or swimlane inside the same board.
+        
+        Args:
+            project_id: The ID of the project
+            task_id: The ID of the task to move
+            column_id: The ID of the destination column
+            position: The position in the column
+            swimlane_id: The ID of the destination swimlane
+        """
+        try:
+            success = client.call_api(
+                "move_task_position",
+                project_id=project_id,
+                task_id=task_id,
+                column_id=column_id,
+                position=position,
+                swimlane_id=swimlane_id
+            )
+            return {
+                "success": True,
+                "data": {"moved": success}
+            }
+        except KanboardClientError as e:
+            logger.error(f"Error moving task {task_id} to position: {e}")
+            return {
+                "success": False,
+                "error": str(e)
+            }
