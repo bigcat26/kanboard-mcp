@@ -23,11 +23,11 @@ classifiers = [
 ]
 
 dependencies = [
-    "mcp>=1.0.0",
-    "kanboard>=1.1.0",
-    "pydantic>=2.0.0",
-    "python-dotenv>=1.0.0",
-    "typing-extensions>=4.0.0",
+    "mcp>=1.26.0",
+    "kanboard>=1.1.7",
+    "pydantic>=2.12.5",
+    "python-dotenv>=1.2.1",
+    "typing-extensions>=4.15.0",
 ]
 
 [project.optional-dependencies]
