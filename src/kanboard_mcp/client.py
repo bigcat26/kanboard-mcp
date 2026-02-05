@@ -64,7 +64,7 @@ class KanboardClient:
         try:
             self._client = self._create_client()
             # Test connection by calling getMe
-            result = self._client.get_me()
+            result = self._client.execute("getMe")
             if result is None:
                 raise KanboardAuthenticationError("Authentication failed - invalid credentials")
             
@@ -100,8 +100,9 @@ class KanboardClient:
                 if not self._client:
                     raise KanboardConnectionError("Client not connected")
                 
-                method = getattr(self._client, method_name)
-                result = method(*args, **kwargs)
+                # method = getattr(self._client, method_name)
+                # result = method(*args, **kwargs)
+                result = self._client.execute(method_name, **kwargs)
                 
                 # Log successful call in debug mode
                 if self.config.server.debug:
@@ -164,7 +165,7 @@ class KanboardClient:
     def test_connection(self) -> Dict[str, Any]:
         """Test connection to Kanboard and return user info."""
         try:
-            result = self.call_api("get_me")
+            result = self.call_api("getMe")
             return {
                 "connected": True,
                 "user": result,
@@ -182,8 +183,8 @@ class KanboardClient:
     def get_server_info(self) -> Dict[str, Any]:
         """Get server information and capabilities."""
         try:
-            user_info = self.call_api("get_me")
-            version = self.call_api("get_version")
+            user_info = self.call_api("getMe")
+            version = self.call_api("getVersion")
             
             return {
                 "server_version": version,

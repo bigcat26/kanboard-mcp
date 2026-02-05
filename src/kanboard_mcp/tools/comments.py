@@ -32,7 +32,7 @@ def register_tools(mcp: FastMCP, client: KanboardClient) -> None:
             if user_id is not None:
                 comment_data["user_id"] = user_id
             
-            comment_id = client.call_api("create_comment", **comment_data)
+            comment_id = client.call_api("createComment", **comment_data)
             return {
                 "success": True,
                 "data": {"comment_id": comment_id}
@@ -52,7 +52,7 @@ def register_tools(mcp: FastMCP, client: KanboardClient) -> None:
             comment_id: The ID of the comment to retrieve
         """
         try:
-            comment = client.call_api("get_comment", comment_id)
+            comment = client.call_api("getComment", comment_id=comment_id)
             return {
                 "success": True,
                 "data": comment
@@ -72,7 +72,7 @@ def register_tools(mcp: FastMCP, client: KanboardClient) -> None:
             task_id: The ID of the task to get comments for
         """
         try:
-            comments = client.call_api("get_all_comments", task_id)
+            comments = client.call_api("getAllComments", task_id=task_id)
             return {
                 "success": True,
                 "data": comments,
@@ -94,7 +94,7 @@ def register_tools(mcp: FastMCP, client: KanboardClient) -> None:
             content: The new content of the comment
         """
         try:
-            success = client.call_api("update_comment", comment_id, content)
+            success = client.call_api("updateComment", comment_id=comment_id, content=content)
             return {
                 "success": True,
                 "data": {"updated": success}
@@ -114,7 +114,7 @@ def register_tools(mcp: FastMCP, client: KanboardClient) -> None:
             comment_id: The ID of the comment to remove
         """
         try:
-            success = client.call_api("remove_comment", comment_id)
+            success = client.call_api("removeComment", comment_id=comment_id)
             return {
                 "success": True,
                 "data": {"removed": success}
